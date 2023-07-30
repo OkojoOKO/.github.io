@@ -1,36 +1,33 @@
-const apiKey = 'bc416e3c661ca0b18c9420c338ddc9ed'; // ここにOpenWeatherMapから取得したAPIキーを入力してください
+document.getElementById('fileInput').addEventListener('change', function(event) {
+  var file = event.target.files[0];
+  var reader = new FileReader();
 
-// APIから神奈川県の気温データを取得する関数
-async function fetchTemperature() {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=Kanagawa,jp&units=metric&appid=${apiKey}`;
+  reader.onload = function(event) {
+    var data = event.target.result;
+    var parsedData = parseCSV(data); // CSVデータの解析などの処理
 
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
+    var trace = {
+      x: parsedData.x,
+      y: parsedData.y,
+      type: 'scatter',
+      mode: 'lines+markers'
+    };
+    var layout = {
+      title: 'アップロードされたデータのグラフ'
+    };
+    Plotly.newPlot('graphContainer', [trace], layout);
+  };
 
-        if (data.main && data.main.temp) {
-            return data.main.temp;
-        } else {
-            throw new Error('データの取得に失敗しました。');
-        }
-    } catch (error) {
-        console.error('エラー:', error.message);
-        return null;
-    }
+  reader.readAsText(file);
+});
+
+function parseCSV(data) {
+  // CSVデータを解析してxとyのデータを抽出する処理
+  // 例えば、以下のような形式を想定
+  // x,y
+  // 1,5
+  // 2,10
+  // ...
+  // 解析した結果を返す
 }
 
-// HTMLに気温を表示する関数
-async function displayTemperature() {
-    const temperatureElement = document.getElementById('temperature');
-    temperatureElement.textContent = 'データ取得中...';
-
-    const temperature = await fetchTemperature();
-    if (temperature !== null) {
-        temperatureElement.textContent = `神奈川県の気温: ${temperature}℃`;
-    } else {
-        temperatureElement.textContent = 'データの取得に失敗しました。';
-    }
-}
-
-// ページ読み込み時に気温を表示
-window.addEventListener('load', displayTemperature);

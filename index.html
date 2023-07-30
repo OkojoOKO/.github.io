@@ -5,11 +5,11 @@
 </head>
 <body>
   <h1>データをアップロードしてグラフ化する</h1>
-  <input type="file" id="fileInput">
+  <label for="fileInput">CSVファイルを選択してください:</label>
+  <input type="file" id="fileInput" placeholder="CSVファイルを選択してください" accept=".csv">
   <div id="graphContainer"></div>
 
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
-

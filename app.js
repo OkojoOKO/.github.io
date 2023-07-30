@@ -36,4 +36,3 @@ function parseCSV(data) {
 
   return { x: x, y: y };
 }
-

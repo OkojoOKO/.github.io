@@ -14,12 +14,22 @@
 </head>
 <body>
   <h1>データをアップロードしてグラフ化する</h1>
+  <label for="fileInput">CSVファイルを選択してください:</label>
+  <input type="file" id="fileInput" accept=".csv">
+  <br>
   <label for="xAxisLabel">X軸のラベル:</label>
   <input type="text" id="xAxisLabel" class="axis-label-input" placeholder="X軸のラベルを入力してください">
+  <br>
   <label for="yAxisLabel">Y軸のラベル:</label>
   <input type="text" id="yAxisLabel" class="axis-label-input" placeholder="Y軸のラベルを入力してください">
-  <label for="fileInput">CSVファイルを選択してください:</label>
-  <input type="file" id="fileInput" placeholder="CSVファイルを選択してください" accept=".csv">
+  <br>
+  <label for="xAxisRange">X軸の表示範囲:</label>
+  <input type="range" id="xAxisRange" min="0" max="9" step="1" value="2,7">
+  <br>
+  <label for="yAxisRange">Y軸の表示範囲:</label>
+  <input type="range" id="yAxisRange" min="0" max="9" step="1" value="2,7">
+  <br>
+  <button onclick="drawGraph()">グラフを描画する</button>
   <div id="graphContainer"></div>
 
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>

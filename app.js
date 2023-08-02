@@ -38,5 +38,16 @@ function drawGraph() {
 
 function parseCSV(data) {
   // CSVデータを解析してデータを抽出する処理
-  // ...
+  // 以下は仮の実装です
+  var lines = data.split('\n');
+  var x = [];
+  var y = [];
+  for (var i = 1; i < lines.length; i++) {
+    var values = lines[i].split(',');
+    if (values.length >= 2) {
+      x.push(parseFloat(values[0]));
+      y.push(parseFloat(values[1]));
+    }
+  }
+  return { x: x, y: y };
 }

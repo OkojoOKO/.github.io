@@ -1,50 +1,54 @@
-function drawGraph() {
+function handleFile() {
   var fileInput = document.getElementById('fileInput');
   var file = fileInput.files[0];
   var reader = new FileReader();
 
   reader.onload = function(event) {
     var data = event.target.result;
-    var parsedData = parseCSV(data); // CSVデータの解析などの処理
-
-    var xAxisLabel = document.getElementById('xAxisLabel').value;
-    var yAxisLabel = document.getElementById('yAxisLabel').value;
-    var xAxisMin = parseFloat(document.getElementById('xAxisMin').value);
-    var xAxisMax = parseFloat(document.getElementById('xAxisMax').value);
-    var yAxisMin = parseFloat(document.getElementById('yAxisMin').value);
-    var yAxisMax = parseFloat(document.getElementById('yAxisMax').value);
-
-    var trace = {
-      x: parsedData.x,
-      y: parsedData.y,
-      type: 'scatter',
-      mode: 'lines+markers'
-    };
-
-    // 最大値と最小値に制限
-    var xData = parsedData.x.map(function(val) {
-      return Math.min(Math.max(val, xAxisMin), xAxisMax);
-    });
-    var yData = parsedData.y.map(function(val) {
-      return Math.min(Math.max(val, yAxisMin), yAxisMax);
-    });
-
-    var layout = {
-      title: 'アップロードされたデータのグラフ',
-      xaxis: {
-        title: xAxisLabel,
-        range: [xAxisMin, xAxisMax]
-      },
-      yaxis: {
-        title: yAxisLabel,
-        range: [yAxisMin, yAxisMax]
-      },
-      margin: { l: 40, r: 0, t: 40, b: 30 }
-    };
-    Plotly.newPlot('graphContainer', [trace], layout);
+    drawGraph(data);
   };
 
   reader.readAsText(file);
+}
+
+function drawGraph(data) {
+  var parsedData = parseCSV(data); // CSVデータの解析などの処理
+
+  var xAxisLabel = document.getElementById('xAxisLabel').value;
+  var yAxisLabel = document.getElementById('yAxisLabel').value;
+  var xAxisMin = parseFloat(document.getElementById('xAxisMin').value);
+  var xAxisMax = parseFloat(document.getElementById('xAxisMax').value);
+  var yAxisMin = parseFloat(document.getElementById('yAxisMin').value);
+  var yAxisMax = parseFloat(document.getElementById('yAxisMax').value);
+
+  var trace = {
+    x: parsedData.x,
+    y: parsedData.y,
+    type: 'scatter',
+    mode: 'lines+markers'
+  };
+
+  // 最大値と最小値に制限
+  var xData = parsedData.x.map(function(val) {
+    return Math.min(Math.max(val, xAxisMin), xAxisMax);
+  });
+  var yData = parsedData.y.map(function(val) {
+    return Math.min(Math.max(val, yAxisMin), yAxisMax);
+  });
+
+  var layout = {
+    title: 'アップロードされたデータのグラフ',
+    xaxis: {
+      title: xAxisLabel,
+      range: [xAxisMin, xAxisMax]
+    },
+    yaxis: {
+      title: yAxisLabel,
+      range: [yAxisMin, yAxisMax]
+    },
+    margin: { l: 40, r: 0, t: 40, b: 30 }
+  };
+  Plotly.newPlot('graphContainer', [trace], layout);
 }
 
 function parseCSV(data) {

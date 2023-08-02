@@ -1,3 +1,23 @@
+function drawGraph(data, xAxisLabel, yAxisLabel) {
+  var trace = {
+    x: data.x,
+    y: data.y,
+    type: 'scatter',
+    mode: 'lines+markers'
+  };
+  var layout = {
+    title: 'アップロードされたデータのグラフ',
+    width: window.innerWidth - 100, // 初期の幅をウィンドウサイズに合わせる
+    xaxis: {
+      title: xAxisLabel // X軸のラベルを設定
+    },
+    yaxis: {
+      title: yAxisLabel // Y軸のラベルを設定
+    }
+  };
+  Plotly.newPlot('graphContainer', [trace], layout);
+}
+
 document.getElementById('fileInput').addEventListener('change', function(event) {
   var file = event.target.files[0];
   var reader = new FileReader();
@@ -6,33 +26,16 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
     var data = event.target.result;
     var parsedData = parseCSV(data); // CSVデータの解析などの処理
 
-    var trace = {
-      x: parsedData.x,
-      y: parsedData.y,
-      type: 'scatter',
-      mode: 'lines+markers'
-    };
-    var layout = {
-      title: 'アップロードされたデータのグラフ'
-    };
-    Plotly.newPlot('graphContainer', [trace], layout);
+    var xAxisLabel = document.getElementById('xAxisLabel').value;
+    var yAxisLabel = document.getElementById('yAxisLabel').value;
+
+    drawGraph(parsedData, xAxisLabel, yAxisLabel); // グラフを描画
   };
 
   reader.readAsText(file);
-});
+}
 
 function parseCSV(data) {
-  var lines = data.split('\n');
-  var x = [];
-  var y = [];
-
-  for (var i = 1; i < lines.length; i++) {
-    var values = lines[i].split(',');
-    if (values.length >= 2) {
-      x.push(parseFloat(values[0]));
-      y.push(parseFloat(values[1]));
-    }
-  }
-
-  return { x: x, y: y };
+  // CSVデータを解析してデータを抽出する処理
+  // ...
 }

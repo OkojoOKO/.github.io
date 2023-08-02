@@ -9,8 +9,10 @@ function drawGraph() {
 
     var xAxisLabel = document.getElementById('xAxisLabel').value;
     var yAxisLabel = document.getElementById('yAxisLabel').value;
-    var xAxisRange = document.getElementById('xAxisRange').value.split(',');
-    var yAxisRange = document.getElementById('yAxisRange').value.split(',');
+    var xAxisMin = parseFloat(document.getElementById('xAxisMin').value);
+    var xAxisMax = parseFloat(document.getElementById('xAxisMax').value);
+    var yAxisMin = parseFloat(document.getElementById('yAxisMin').value);
+    var yAxisMax = parseFloat(document.getElementById('yAxisMax').value);
 
     var trace = {
       x: parsedData.x,
@@ -18,15 +20,24 @@ function drawGraph() {
       type: 'scatter',
       mode: 'lines+markers'
     };
+
+    // 最大値と最小値に制限
+    var xData = parsedData.x.map(function(val) {
+      return Math.min(Math.max(val, xAxisMin), xAxisMax);
+    });
+    var yData = parsedData.y.map(function(val) {
+      return Math.min(Math.max(val, yAxisMin), yAxisMax);
+    });
+
     var layout = {
       title: 'アップロードされたデータのグラフ',
       xaxis: {
         title: xAxisLabel,
-        range: [parseFloat(xAxisRange[0]), parseFloat(xAxisRange[1])]
+        range: [xAxisMin, xAxisMax]
       },
       yaxis: {
         title: yAxisLabel,
-        range: [parseFloat(yAxisRange[0]), parseFloat(yAxisRange[1])]
+        range: [yAxisMin, yAxisMax]
       },
       margin: { l: 40, r: 0, t: 40, b: 30 }
     };

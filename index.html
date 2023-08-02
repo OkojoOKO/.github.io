@@ -2,9 +2,22 @@
 <html>
 <head>
   <title>データのグラフ化</title>
+  <style>
+    #graphContainer {
+      margin: 10px; /* グラフの周囲の余白 */
+      max-width: 100%; /* グラフの最大幅 */
+    }
+    .axis-label-input {
+      margin: 5px 0;
+    }
+  </style>
 </head>
 <body>
   <h1>データをアップロードしてグラフ化する</h1>
+  <label for="xAxisLabel">X軸のラベル:</label>
+  <input type="text" id="xAxisLabel" class="axis-label-input" placeholder="X軸のラベルを入力してください">
+  <label for="yAxisLabel">Y軸のラベル:</label>
+  <input type="text" id="yAxisLabel" class="axis-label-input" placeholder="Y軸のラベルを入力してください">
   <label for="fileInput">CSVファイルを選択してください:</label>
   <input type="file" id="fileInput" placeholder="CSVファイルを選択してください" accept=".csv">
   <div id="graphContainer"></div>

@@ -1,25 +1,6 @@
-function drawGraph(data, xAxisLabel, yAxisLabel) {
-  var trace = {
-    x: data.x,
-    y: data.y,
-    type: 'scatter',
-    mode: 'lines+markers'
-  };
-  var layout = {
-    title: 'アップロードされたデータのグラフ',
-    width: window.innerWidth - 100, // 初期の幅をウィンドウサイズに合わせる
-    xaxis: {
-      title: xAxisLabel // X軸のラベルを設定
-    },
-    yaxis: {
-      title: yAxisLabel // Y軸のラベルを設定
-    }
-  };
-  Plotly.newPlot('graphContainer', [trace], layout);
-}
-
-document.getElementById('fileInput').addEventListener('change', function(event) {
-  var file = event.target.files[0];
+function drawGraph() {
+  var fileInput = document.getElementById('fileInput');
+  var file = fileInput.files[0];
   var reader = new FileReader();
 
   reader.onload = function(event) {
@@ -28,8 +9,28 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
 
     var xAxisLabel = document.getElementById('xAxisLabel').value;
     var yAxisLabel = document.getElementById('yAxisLabel').value;
+    var xAxisRange = document.getElementById('xAxisRange').value.split(',');
+    var yAxisRange = document.getElementById('yAxisRange').value.split(',');
 
-    drawGraph(parsedData, xAxisLabel, yAxisLabel); // グラフを描画
+    var trace = {
+      x: parsedData.x,
+      y: parsedData.y,
+      type: 'scatter',
+      mode: 'lines+markers'
+    };
+    var layout = {
+      title: 'アップロードされたデータのグラフ',
+      xaxis: {
+        title: xAxisLabel,
+        range: [parseFloat(xAxisRange[0]), parseFloat(xAxisRange[1])]
+      },
+      yaxis: {
+        title: yAxisLabel,
+        range: [parseFloat(yAxisRange[0]), parseFloat(yAxisRange[1])]
+      },
+      margin: { l: 40, r: 0, t: 40, b: 30 }
+    };
+    Plotly.newPlot('graphContainer', [trace], layout);
   };
 
   reader.readAsText(file);

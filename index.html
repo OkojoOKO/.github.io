@@ -23,11 +23,15 @@
   <label for="yAxisLabel">Y軸のラベル:</label>
   <input type="text" id="yAxisLabel" class="axis-label-input" placeholder="Y軸のラベルを入力してください">
   <br>
-  <label for="xAxisRange">X軸の表示範囲:</label>
-  <input type="range" id="xAxisRange" min="0" max="9" step="1" value="2,7">
+  <label for="xAxisMin">X軸の最小値:</label>
+  <input type="text" id="xAxisMin" value="0">
+  <label for="xAxisMax">X軸の最大値:</label>
+  <input type="text" id="xAxisMax" value="9">
   <br>
-  <label for="yAxisRange">Y軸の表示範囲:</label>
-  <input type="range" id="yAxisRange" min="0" max="9" step="1" value="2,7">
+  <label for="yAxisMin">Y軸の最小値:</label>
+  <input type="text" id="yAxisMin" value="0">
+  <label for="yAxisMax">Y軸の最大値:</label>
+  <input type="text" id="yAxisMax" value="9">
   <br>
   <button onclick="drawGraph()">グラフを描画する</button>
   <div id="graphContainer"></div>
@@ -36,4 +40,3 @@
   <script src="app.js"></script>
 </body>
 </html>
-
